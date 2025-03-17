@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SyllabAI - Intelligent Syllabus Creation Platform</title>
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Navigation -->
+        <nav class="main-nav">
+            <div class="nav-container">
+                <div class="logo">
+                    <img src="https://via.placeholder.com/40" alt="SyllabAI Logo" class="logo-img">
+                    <span class="logo-text">SyllabAI</span>
+                </div>
+                <div class="nav-links">
+                    <a href="#" class="active">Dashboard</a>
+                    <a href="#">My Syllabi</a>
+                    <a href="#">Templates</a>
+                    <a href="#">Resources</a>
+                </div>
+                <div class="user-controls">
+                    <button class="btn-secondary"><i class="fas fa-question-circle"></i> Help</button>
+                    <div class="user-profile">
+                        <img src="https://via.placeholder.com/32" alt="User" class="user-avatar">
+                        <span class="username">Dr. Johnson</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Multi-step Process Container -->
+            <div class="process-container">
+                <!-- Progress Indicator -->
+                <div class="progress-indicator">
+                    <div class="progress-steps">
+                        <div class="step active" data-step="1">
+                            <div class="step-number">1</div>
+                            <div class="step-label">Upload Materials</div>
+                        </div>
+                        <div class="step" data-step="2">
+                            <div class="step-number">2</div>
+                            <div class="step-label">Course Details</div>
+                        </div>
+                        <div class="step" data-step="3">
+                            <div class="step-number">3</div>
+                            <div class="step-label">Structure & Content</div>
+                        </div>
+                        <div class="step" data-step="4">
+                            <div class="step-number">4</div>
+                            <div class="step-label">Review & Generate</div>
+                        </div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-completed" style="width: 25%"></div>
+                    </div>
+                </div>
+
+                <!-- Step Content Panels -->
+                <div class="step-panels">
+                    <!-- Step 1: Material Upload -->
+                    <div class="panel active" id="panel-1" data-aos="fade-up">
+                        <div class="panel-header">
+                            <h2>Upload Your Course Materials</h2>
+                            <p>Upload existing syllabi, course materials, or reference documents to help SyllabAI understand your course.</p>
+                        </div>
+                        
+                        <div class="upload-section">
+                            <div class="upload-container" id="dragDropArea">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <h3>Drag & Drop Files Here</h3>
+                                <p>or</p>
+                                <button class="btn-primary" id="browseFilesBtn">Browse Files</button>
+                                <input type="file" id="fileInput" multiple accept=".pdf,.docx,.doc,.txt" style="display: none;">
+                                <p class="file-types">Supported formats: PDF, DOCX, DOC, TXT</p>
+                            </div>
+                            
+                            <div class="uploaded-files-container">
+                                <h3>Uploaded Materials</h3>
+                                <div class="files-list" id="filesList">
+                                    <!-- File items will be added here dynamically -->
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="ai-insights" id="aiInsights" style="display: none;">
+                            <h3><i class="fas fa-lightbulb"></i> AI Insights</h3>
+                            <div class="insight-content">
+                                <p>Based on your uploaded materials, SyllabAI has identified:</p>
+                                <ul id="insightsList">
+                                    <!-- Insights will be added here dynamically -->
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="panel-actions">
+                            <button class="btn-secondary">Skip This Step</button>
+                            <button class="btn-primary next-step" data-goto="2">Continue</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 2: Course Details -->
+                    <div class="panel" id="panel-2">
+                        <div class="panel-header">
+                            <h2>Course Details</h2>
+                            <p>Provide essential information about your course to customize your syllabus.</p>
+                        </div>
+                        
+                        <div class="form-container">
+                            <div class="form-section">
+                                <h3>Basic Information</h3>
+                                <div class="form-group">
+                                    <label for="courseTitle">Course Title</label>
+                                    <input type="text" id="courseTitle" placeholder="e.g., Introduction to Business Analytics">
+                                </div>
+                                
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="courseCode">Course Code</label>
+                                        <input type="text" id="courseCode" placeholder="e.g., BUS 301">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="creditHours">Credit Hours</label>
+                                        <input type="number" id="creditHours" placeholder="3" min="1" max="12">
+                                    </div>
+                                </div>
+                                
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="termSelect">Term/Semester</label>
+                                        <select id="termSelect">
+                                            <option value="">Select Term</option>
+                                            <option value="Fall 2025">Fall 2025</option>
+                                            <option value="Spring 2026">Spring 2026</option>
+                                            <option value="Summer 2026">Summer 2026</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="deliveryMode">Delivery Mode</label>
+                                        <select id="deliveryMode">
+                                            <option value="">Select Mode</option>
+                                            <option value="In-person">In-person</option>
+                                            <option value="Online - Synchronous">Online - Synchronous</option>
+                                            <option value="Online - Asynchronous">Online - Asynchronous</option>
+                                            <option value="Hybrid">Hybrid</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-section">
+                                <h3>Instructor Information</h3>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="instructorName">Instructor Name</label>
+                                        <input type="text" id="instructorName" placeholder="e.g., Dr. Jane Smith">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="instructorTitle">Title</label>
+                                        <input type="text" id="instructorTitle" placeholder="e.g., Associate Professor">
+                                    </div>
+                                </div>
+                                
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="instructorEmail">Email</label>
+                                        <input type="email" id="instructorEmail" placeholder="e.g., jsmith@university.edu">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="officeHours">Office Hours</label>
+                                        <input type="text" id="officeHours" placeholder="e.g., Tue/Thu 2-4 PM">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-section">
+                                <h3>Course Classification</h3>
+                                <div class="form-group">
+                                    <label for="departmentSelect">Department</label>
+                                    <select id="departmentSelect">
+                                        <option value="">Select Department</option>
+                                        <option value="Business">Business</option>
+                                        <option value="Computer Science">Computer Science</option>
+                                        <option value="Engineering">Engineering</option>
+                                        <option value="Humanities">Humanities</option>
+                                        <option value="Natural Sciences">Natural Sciences</option>
+                                        <option value="Social Sciences">Social Sciences</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="courseLevel">Course Level</label>
+                                    <div class="radio-group">
+                                        <label class="radio-option">
+                                            <input type="radio" name="courseLevel" value="Undergraduate">
+                                            <span>Undergraduate</span>
+                                        </label>
+                                        <label class="radio-option">
+                                            <input type="radio" name="courseLevel" value="Graduate">
+                                            <span>Graduate</span>
+                                        </label>
+                                        <label class="radio-option">
+                                            <input type="radio" name="courseLevel" value="Doctoral">
+                                            <span>Doctoral</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>Course Type</label>
+                                    <div class="checkbox-group">
+                                        <label class="checkbox-option">
+                                            <input type="checkbox" name="courseType" value="Lecture">
+                                            <span>Lecture</span>
+                                        </label>
+                                        <label class="checkbox-option">
+                                            <input type="checkbox" name="courseType" value="Seminar">
+                                            <span>Seminar</span>
+                                        </label>
+                                        <label class="checkbox-option">
+                                            <input type="checkbox" name="courseType" value="Lab">
+                                            <span>Lab</span>
+                                        </label>
+                                        <label class="checkbox-option">
+                                            <input type="checkbox" name="courseType" value="Project-based">
+                                            <span>Project-based</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="panel-actions">
+                            <button class="btn-text prev-step" data-goto="1"><i class="fas fa-arrow-left"></i> Back</button>
+                            <button class="btn-primary next-step" data-goto="3">Continue</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 3: Structure & Content -->
+                    <div class="panel" id="panel-3">
+                        <div class="panel-header">
+                            <h2>Structure & Content</h2>
+                            <p>Customize the structure and content of your syllabus.</p>
+                        </div>
+                        
+                        <div class="structure-container">
+                            <div class="structure-sidebar">
+                                <h3>Syllabus Sections</h3>
+                                <div class="section-list" id="sectionList">
+                                    <div class="section-item active" data-section="courseDescription">
+                                        <span>Course Description</span>
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                    <div class="section-item" data-section="learningObjectives">
+                                        <span>Learning Objectives</span>
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                    <div class="section-item" data-section="courseSchedule">
+                                        <span>Course Schedule</span>
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                    <div class="section-item" data-section="assignments">
+                                        <span>Assignments & Assessments</span>
+                                        <i class="fas fa-exclamation-circle"></i>
+                                    </div>
+                                    <div class="section-item" data-section="gradingPolicy">
+                                        <span>Grading Policy</span>
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                    <div class="section-item" data-section="requiredMaterials">
+                                        <span>Required Materials</span>
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                    <div class="section-item" data-section="coursePolicies">
+                                        <span>Course Policies</span>
+                                        <i class="fas fa-exclamation-circle"></i>
+                                    </div>
+                                    <div class="section-item add-section">
+                                        <span><i class="fas fa-plus"></i> Add Custom Section</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="structure-content">
+                                <div class="content-editor active" id="courseDescriptionEditor">
+                                    <div class="editor-header">
+                                        <h3>Course Description</h3>
+                                        <div class="editor-tools">
+                                            <button class="btn-icon" title="AI Suggestions"><i class="fas fa-magic"></i></button>
+                                            <button class="btn-icon" title="Template Library"><i class="fas fa-book"></i></button>
+                                        </div>
+                                    </div>
+                                    <div class="rich-text-editor">
+                                        <div class="editor-toolbar">
+                                            <button class="tool-btn" title="Bold"><i class="fas fa-bold"></i></button>
+                                            <button class="tool-btn" title="Italic"><i class="fas fa-italic"></i></button>
+                                            <button class="tool-btn" title="Bulleted List"><i class="fas fa-list-ul"></i></button>
+                                            <button class="tool-btn" title="Numbered List"><i class="fas fa-list-ol"></i></button>
+                                        </div>
+                                        <div class="editor-field" contenteditable="true">
+                                            <p>This course provides an introduction to the field of business analytics, focusing on the applications of data analysis techniques for business decision-making. Students will learn fundamental concepts of data analysis, visualization, and interpretation through hands-on exercises and case studies.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Other editors will be displayed dynamically -->
+                            </div>
+                        </div>
+                        
+                        <div class="ai-suggestion-panel" id="aiSuggestionPanel">
+                            <div class="suggestion-header">
+                                <h3><i class="fas fa-lightbulb"></i> AI Suggestions</h3>
+                                <button class="btn-icon close-suggestions"><i class="fas fa-times"></i></button>
+                            </div>
+                            <div class="suggestion-content">
+                                <p>Based on your course details, SyllabAI suggests:</p>
+                                <div class="suggestion-item">
+                                    <h4>Learning Objective</h4>
+                                    <p>Apply statistical methods to analyze business data and derive actionable insights for decision-making.</p>
+                                    <button class="btn-text">Use This <i class="fas fa-plus"></i></button>
+                                </div>
+                                <div class="suggestion-item">
+                                    <h4>Assessment Method</h4>
+                                    <p>Case analysis project where students analyze real-world business data and present findings (25% of final grade).</p>
+                                    <button class="btn-text">Use This <i class="fas fa-plus"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="panel-actions">
+                            <button class="btn-text prev-step" data-goto="2"><i class="fas fa-arrow-left"></i> Back</button>
+                            <button class="btn-primary next-step" data-goto="4">Continue to Review</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 4: Review & Generate -->
+                    <div class="panel" id="panel-4">
+                        <div class="panel-header">
+                            <h2>Review & Generate Syllabus</h2>
+                            <p>Review your syllabus and make final adjustments before generating.</p>
+                        </div>
+                        
+                        <div class="review-container">
+                            <div class="syllabus-preview">
+                                <div class="preview-header">
+                                    <h3>Syllabus Preview</h3>
+                                    <div class="preview-controls">
+                                        <button class="btn-icon" title="Full Screen"><i class="fas fa-expand"></i></button>
+                                        <button class="btn-icon" title="Print"><i class="fas fa-print"></i></button>
+                                    </div>
+                                </div>
+                                <div class="preview-document" id="syllabusPreview">
+                                    <!-- Syllabus preview content will be loaded here -->
+                                </div>
+                            </div>
+                            
+                            <div class="review-sidebar">
+                                <div class="quality-check">
+                                    <h3>Quality Check</h3>
+                                    <div class="quality-progress">
+                                        <div class="progress-circle">
+                                            <svg width="80" height="80">
+                                                <circle cx="40" cy="40" r="35" fill="none" stroke="#EAEAEA" stroke-width="5"></circle>
+                                                <circle cx="40" cy="40" r="35" fill="none" stroke="#4CAF50" stroke-width="5" stroke-dasharray="220" stroke-dashoffset="44"></circle>
+                                                <text x="40" y="45" text-anchor="middle" font-size="18" font-weight="bold">92%</text>
+                                            </svg>
+                                        </div>
+                                        <div class="quality-details">
+                                            <h4>Very Good</h4>
+                                            <p>Your syllabus is almost perfect!</p>
+                                        </div>
+                                    </div>
+                                    <div class="quality-issues">
+                                        <div class="issue-item">
+                                            <i class="fas fa-exclamation-triangle"></i>
+                                            <div class="issue-content">
+                                                <h4>Missing Academic Integrity Policy</h4>
+                                                <p>Required by your institution.</p>
+                                                <button class="btn-text">Fix This <i class="fas fa-arrow-right"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="issue-item">
+                                            <i class="fas fa-info-circle"></i>
+                                            <div class="issue-content">
+                                                <h4>Consider Adding Diversity Statement</h4>
+                                                <p>Recommended but not required.</p>
+                                                <button class="btn-text">Add Statement <i class="fas fa-plus"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="export-options">
+                                    <h3>Export Options</h3>
+                                    <div class="option-list">
+                                        <label class="checkbox-option">
+                                            <input type="checkbox" checked>
+                                            <span>Include Table of Contents</span>
+                                        </label>
+                                        <label class="checkbox-option">
+                                            <input type="checkbox" checked>
+                                            <span>Include Header/Footer</span>
+                                        </label>
+                                        <label class="checkbox-option">
+                                            <input type="checkbox" checked>
+                                            <span>Make Accessible (ADA Compliant)</span>
+                                        </label>
+                                    </div>
+                                    <div class="format-options">
+                                        <button class="format-btn active">
+                                            <i class="fas fa-file-pdf"></i>
+                                            <span>PDF</span>
+                                        </button>
+                                        <button class="format-btn">
+                                            <i class="fas fa-file-word"></i>
+                                            <span>DOCX</span>
+                                        </button>
+                                        <button class="format-btn">
+                                            <i class="fas fa-file-code"></i>
+                                            <span>HTML</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="panel-actions">
+                            <button class="btn-text prev-step" data-goto="3"><i class="fas fa-arrow-left"></i> Back</button>
+                            <button class="btn-primary" id="generateSyllabusBtn">
+                                <i class="fas fa-magic"></i> Generate Syllabus
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <!-- Footer -->
+        <footer class="app-footer">
+            <div class="footer-container">
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Support</a>
+                </div>
+                <div class="footer-copyright">
+                    © 2025 SyllabAI - Intelligent Syllabus Creation
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal" id="successModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Success!</h2>
+                <button class="close-modal"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="success-animation">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h3>Your Syllabus is Ready!</h3>
+                <p>Your professional syllabus has been successfully generated and is ready for use.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary">Edit Syllabus</button>
+                <button class="btn-primary">Download Syllabus</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script src="app.js"></script>
+</body>
+</html>
